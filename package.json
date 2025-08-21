@@ -1,0 +1,43 @@
+{
+  "name": "verso-recto",
+  "version": "1.0.0",
+  "description": "A tool to migrate my website from Hugo to Zola",
+  "homepage": "https://github.com/techxplorer/verso-recto#readme",
+  "bugs": {
+    "url": "https://github.com/techxplorer/verso-recto/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techxplorer/verso-recto.git"
+  },
+  "license": "MIT",
+  "author": "Corey Wallis <corey@techxplorer.com> (https://techxplorer.com)",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "verso-recto": "./bin/index.js"
+  },
+  "engines": {
+    "node": ">=22.1.0"
+  },
+  "scripts": {
+    "test": "node --test",
+    "coverage": "node --test --experimental-test-coverage",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.33.0",
+    "eslint-config-jquery": "^3.0.2",
+    "eslint-plugin-jsdoc": "^54.1.1",
+    "globals": "^16.3.0",
+    "jsdoc": "^4.0.4",
+    "rimraf": "^6.0.1",
+    "validator": "^13.15.15"
+  },
+  "dependencies": {
+    "chalk": "^5.6.0",
+    "commander": "^14.0.0",
+    "pretty-ms": "^9.2.0"
+  }
+}
