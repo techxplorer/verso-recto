@@ -126,6 +126,12 @@ class BlogPost {
     this.newPostContent = {};
     this.newPostContent.content = this.postContent.content;
 
+    // Tidy up the content a little by remove multiple consecutive blank lines.
+    this.newPostContent.content = this.newPostContent.content.replace(
+      /(\r?\n){2,}/g,
+      "\n\n"
+    );
+
     // Build the new front matter
     const frontMatter = {};
 

@@ -22,7 +22,7 @@ const testPassVersoPostPathOne = path.resolve( "tests/artefacts/verso/20160209-0
 /**
  * Helper function to tidy the archive directory.
  */
-function tidyRectorDir() {
+function tidyRectoDir() {
   rimraf.sync(
     testPassRectoPath + "/*",
     {
@@ -109,11 +109,11 @@ describe( "PostCopier", () => {
   describe( "copyPost", () => {
 
     before( () => {
-      tidyRectorDir();
+      tidyRectoDir();
     } );
 
     afterEach( () => {
-      tidyRectorDir();
+      tidyRectoDir();
     } );
 
     it( "should copy a post from the verso to the recto path", async() => {
