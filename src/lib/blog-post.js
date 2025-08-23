@@ -6,6 +6,8 @@ import { lstatSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+import slug from "slug";
+
 import TomlMatter from "./toml-matter.js";
 import YamlMatter from "./yaml-matter.js";
 
@@ -25,6 +27,12 @@ class BlogPost {
    * @type {object}
    */
   postContent = {};
+
+  /**
+   * The content of the new post including front matter and content.
+   * @type {object}
+   */
+  newPostContent = {};
 
   /**
    * Construct a new object.
@@ -87,6 +95,37 @@ class BlogPost {
     } else {
       this.postContent = TomlMatter.parse( postFileContent );
     }
+  }
+
+  /**
+   * Convert the post from the old to the new format.
+   */
+  convertPost() {
+
+    // Copy the content of the post.
+    this.newPostContent.content = this.postContent.content;
+
+    // Build the new front matter
+    const frontMatter = {};
+
+    frontMatter.title = this.postContent.data.title;
+
+    if ( this.postContent.data.description !== undefined ) {
+      frontMatter.description = this.postContent.data.description;
+    }
+
+    frontMatter.date = this.postContent.data.date;
+    frontMatter.slug = slug( this.postContent.data.title );
+    frontMatter.taxonomies = {};
+    frontMatter.taxonomies.tags = this.postContent.data.tags;
+
+    // Add extra options for the theme to use.
+    frontMatter.extra = {};
+    frontMatter.extra.show_reading_time = false;
+
+    // finalise the post content
+    this.newPostContent.data = frontMatter;
+
   }
 }
 

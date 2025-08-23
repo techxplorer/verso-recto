@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import path from "node:path";
 import { describe, it } from "node:test";
 
+import TomlMatter from "../../src/lib/toml-matter.js";
+
 import BlogPost from "../../src/lib/blog-post.js";
 
 const testFailPathOne = "";
@@ -19,6 +21,12 @@ const testPassSourceFrontMatter = [
   "date",
   "categories",
   "tags"
+];
+const testPassNewFrontMatter = [
+  "title",
+  "date",
+  "taxonomies",
+  "extra"
 ];
 
 describe( "BlogPost", () => {
@@ -176,6 +184,34 @@ describe( "BlogPost", () => {
         assert.ok(
           item in blogPost.postContent.data,
           `Item ${ item } is not in the front matter`
+        );
+      }
+
+    } );
+
+  } );
+
+  describe( "convertPost", async() => {
+
+    it( "should create valid new front matter", async() => {
+
+      const blogPost = new BlogPost( testPassPathOne );
+      await blogPost.loadPost();
+      blogPost.convertPost();
+
+      assert.ok(
+        TomlMatter.validate(
+          TomlMatter.serialize(
+            blogPost.newPostContent.data,
+            blogPost.newPostContent.content
+          )
+        )
+      );
+
+      for ( let item of testPassNewFrontMatter ) {
+        assert.ok(
+          item in blogPost.newPostContent.data,
+          `Item ${ item } is not in the new front matter`
         );
       }
 
