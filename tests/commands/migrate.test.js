@@ -5,7 +5,7 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { after, before, describe, it } from "node:test";
 
-import { isCI } from "is-ci";
+import { isCI } from "ci-info";
 import { rimraf } from "rimraf";
 
 import Migrate from "../../src/commands/migrate.js";
@@ -63,7 +63,7 @@ describe( "Migrate", () => {
 
   it( "should copy all posts from verso to recto directory", async( ctx ) => {
 
-    if ( true ) {
+    if ( isCI ) {
       ctx.skip( "Skip test on CI" );
       return;
     }

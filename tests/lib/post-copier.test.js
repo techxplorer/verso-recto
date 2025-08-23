@@ -3,7 +3,7 @@ import { lstatSync } from "node:fs";
 import path from "node:path";
 import { afterEach, before, describe, it } from "node:test";
 
-import { isCI } from "is-ci";
+import { isCI } from "ci-info";
 import { rimraf } from "rimraf";
 
 import PostCopier from "../../src/lib/post-copier.js";
