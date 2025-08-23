@@ -13,6 +13,13 @@ const testFailPathMsgThree = "Directory must contain an 'index.md' file";
 const testFailPathFour = path.resolve( "tests/artefacts/invalid-post" );
 const testPassPathOne = path.resolve( "tests/artefacts/verso/20160209-090107" );
 const testPassPathTwo = path.resolve( "tests/artefacts/verso/20160209-124423" );
+const testPassPathThree = path.resolve( "tests/artefacts/verso/114968877794416644" );
+const testPassSourceFrontMatter = [
+  "title",
+  "date",
+  "categories",
+  "tags"
+];
 
 describe( "BlogPost", () => {
 
@@ -120,7 +127,7 @@ describe( "BlogPost", () => {
       );
       assert.ok(
         "content" in blogPost.postContent,
-        "Property 'content does not exist"
+        "Property 'content' does not exist"
       );
 
       blogPost = new BlogPost( testPassPathTwo );
@@ -131,8 +138,46 @@ describe( "BlogPost", () => {
       );
       assert.ok(
         "content" in blogPost.postContent,
-        "Property 'content does not exist"
+        "Property 'content' does not exist"
       );
+
+    } );
+
+    it( "should result in correct frontmatter", async() => {
+
+      let blogPost = new BlogPost( testPassPathOne );
+      await blogPost.loadPost();
+
+      for ( let item of testPassSourceFrontMatter ) {
+        assert.ok(
+          item in blogPost.postContent.data,
+          `Item ${ item } is not in the front matter`
+        );
+      }
+
+      blogPost = new BlogPost( testPassPathTwo );
+      await blogPost.loadPost();
+
+      for ( let item of testPassSourceFrontMatter ) {
+        assert.ok(
+          item in blogPost.postContent.data,
+          `Item ${ item } is not in the front matter`
+        );
+      }
+
+      blogPost = new BlogPost( testPassPathThree );
+      await blogPost.loadPost();
+
+      testPassSourceFrontMatter.push(
+        "toot_url"
+      );
+
+      for ( let item of testPassSourceFrontMatter ) {
+        assert.ok(
+          item in blogPost.postContent.data,
+          `Item ${ item } is not in the front matter`
+        );
+      }
 
     } );
 

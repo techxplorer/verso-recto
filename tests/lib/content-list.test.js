@@ -11,6 +11,14 @@ const testFailPathMsgTwo = "Path must be a directory";
 const testPassPathOne = path.resolve( "tests/artefacts/verso" );
 const testPassPathTwo = path.resolve( "tests/artefacts/recto" );
 const testPassContentListSize = 3;
+const testPassPostProperties = [
+  "postPath",
+  "postContent"
+];
+const testPassPostContentProperties = [
+  "data",
+  "content"
+];
 
 describe( "ContentList", () => {
 
@@ -154,6 +162,83 @@ describe( "ContentList", () => {
         contents.length,
         testPassContentListSize
       );
+
+    } );
+
+  } );
+
+  describe( "getBlogPost", async() => {
+
+    it( "should throw an error if the parameters are incorrect", async() => {
+
+      const contentList = new ContentList( testPassPathOne );
+
+      const contentListSize = await contentList.loadContents();
+
+      assert.equal(
+        contentListSize,
+        testPassContentListSize
+      );
+
+      const contents = await contentList.getContents();
+
+      assert.ok( Array.isArray( contents ) );
+
+      assert.equal(
+        contents.length,
+        testPassContentListSize
+      );
+
+      try {
+        await contentList.getBlogPost( "" );
+      // eslint-disable-next-line no-unused-vars
+      } catch ( error ) {
+        return;
+      }
+
+      assert.fail( "Expected exception was not thrown" );
+
+    } );
+
+    it( "should successfully load a blog post", async() => {
+
+      const contentList = new ContentList( testPassPathOne );
+
+      const contentListSize = await contentList.loadContents();
+
+      assert.equal(
+        contentListSize,
+        testPassContentListSize
+      );
+
+      const contents = await contentList.getContents();
+
+      assert.ok( Array.isArray( contents ) );
+
+      assert.equal(
+        contents.length,
+        testPassContentListSize
+      );
+
+      for ( let contentDir of contents ) {
+        const post = await contentList.getBlogPost( contentDir );
+
+        assert.ok( typeof post === "object" );
+
+        for ( let prop of testPassPostProperties ) {
+          assert.ok(
+            prop in post,
+            `Property ${ prop } does not exist`
+          );
+        }
+
+        for ( let prop of testPassPostContentProperties ) {
+          assert.ok(
+            prop in post.postContent,
+            `Property ${ prop } does not exists`
+          );
+        }
+      }
 
     } );
 

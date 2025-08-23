@@ -4,6 +4,9 @@
 
 import { lstatSync } from "node:fs";
 import { readdir } from "node:fs/promises";
+import path from "node:path";
+
+import BlogPost from "./blog-post.js";
 
 /**
  * Maintain a list of content.
@@ -108,6 +111,33 @@ class ContentList {
     await this.loadContents();
 
     return this.contents;
+  }
+
+  /**
+   * Return a post from the list of content
+   * Uses the already loaded content list, or loads them if required.
+   * @param {string} directoryName The name of the directory containing the post.
+   * @returns {BlogPost} The array of statuses from the archive.
+   * @throws {Error} When the post cannot be loaded.
+   * @throws {TypeError} When the parameters are incorrect.
+   */
+  async getBlogPost( directoryName ) {
+
+    if ( typeof directoryName != "string" || directoryName.length === 0 ) {
+      throw new TypeError( "Directory name is expected to be a non-zero length string" );
+    }
+
+    const post = new BlogPost(
+      path.join(
+        this.contentPath,
+        directoryName
+      )
+    );
+
+    await post.loadPost();
+
+    return post;
+
   }
 
 }
