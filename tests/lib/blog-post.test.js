@@ -28,6 +28,9 @@ const testPassNewFrontMatter = [
   "taxonomies",
   "extra"
 ];
+const testMediaCountOne = 1;
+const testMediaCountTwo = 1;
+const testMediaCountThree = 4;
 
 describe( "BlogPost", () => {
 
@@ -186,6 +189,34 @@ describe( "BlogPost", () => {
           `Item ${ item } is not in the front matter`
         );
       }
+
+    } );
+
+    it( "should load the correct number of media files", async() => {
+
+      let blogPost = new BlogPost( testPassPathOne );
+      await blogPost.loadPost();
+
+      assert.ok(
+        blogPost.postMedia.length,
+        testMediaCountOne
+      );
+
+      blogPost = new BlogPost( testPassPathTwo );
+      await blogPost.loadPost();
+
+      assert.ok(
+        blogPost.postMedia.length,
+        testMediaCountTwo
+      );
+
+      blogPost = new BlogPost( testPassPathThree );
+      await blogPost.loadPost();
+
+      assert.ok(
+        blogPost.postMedia.length,
+        testMediaCountThree
+      );
 
     } );
 

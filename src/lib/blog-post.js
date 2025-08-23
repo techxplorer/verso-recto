@@ -3,7 +3,7 @@
  */
 
 import { lstatSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 
 import slug from "slug";
@@ -27,6 +27,12 @@ class BlogPost {
    * @type {object}
    */
   postContent = {};
+
+  /**
+   * A list of media co-located with the post.
+   * @type {Array}
+   */
+  postMedia = [];
 
   /**
    * The content of the new post including front matter and content.
@@ -95,6 +101,20 @@ class BlogPost {
     } else {
       this.postContent = TomlMatter.parse( postFileContent );
     }
+
+    this.postMedia = await readdir(
+      this.postPath
+    );
+
+    this.postMedia = this.postMedia.filter( mediaFile => {
+      if ( path.extname( mediaFile ) === ".jpeg" ) {
+        return true;
+      } else if ( path.extname( mediaFile ) === ".jpg" ) {
+        return true;
+      } else {
+        return false;
+      }
+    } );
   }
 
   /**
@@ -127,6 +147,7 @@ class BlogPost {
     this.newPostContent.data = frontMatter;
 
   }
+
 }
 
 export default BlogPost;
