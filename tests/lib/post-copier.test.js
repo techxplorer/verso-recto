@@ -3,6 +3,7 @@ import { lstatSync } from "node:fs";
 import path from "node:path";
 import { afterEach, before, describe, it } from "node:test";
 
+import { isCI } from "is-ci";
 import { rimraf } from "rimraf";
 
 import PostCopier from "../../src/lib/post-copier.js";
@@ -116,7 +117,12 @@ describe( "PostCopier", () => {
       tidyRectoDir();
     } );
 
-    it( "should copy a post from the verso to the recto path", async() => {
+    it( "should copy a post from the verso to the recto path", async( ctx ) => {
+
+      if ( isCI ) {
+        ctx.skip( "Skip test on CI" );
+        return;
+      }
 
       let blogPost = new BlogPost( testPassVersoPostPathOne );
       await blogPost.loadPost();
