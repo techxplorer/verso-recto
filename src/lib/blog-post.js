@@ -38,7 +38,7 @@ class BlogPost {
    * The content of the new post including front matter and content.
    * @type {object}
    */
-  newPostContent = {};
+  newPostContent = null;
 
   /**
    * Construct a new object.
@@ -123,6 +123,7 @@ class BlogPost {
   convertPost() {
 
     // Copy the content of the post.
+    this.newPostContent = {};
     this.newPostContent.content = this.postContent.content;
 
     // Build the new front matter
