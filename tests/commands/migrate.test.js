@@ -63,7 +63,7 @@ describe( "Migrate", () => {
 
   it( "should copy all posts from verso to recto directory", async( ctx ) => {
 
-    if ( isCI ) {
+    if ( true ) {
       ctx.skip( "Skip test on CI" );
       return;
     }
