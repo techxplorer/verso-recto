@@ -38,6 +38,8 @@
   "dependencies": {
     "chalk": "^5.6.0",
     "commander": "^14.0.0",
+    "matter-toml": "^1.0.0",
+    "matter-yaml": "^1.1.0",
     "pretty-ms": "^9.2.0"
   }
 }
