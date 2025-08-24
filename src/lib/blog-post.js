@@ -150,6 +150,15 @@ class BlogPost {
     frontMatter.extra = {};
     frontMatter.extra.show_reading_time = false;
 
+    // Add a shortcode for each of the colocated media.
+    for ( let mediaFile of this.postMedia ) {
+      let mediaFileName = path.basename( mediaFile, path.extname( mediaFile ) );
+      mediaFileName += ".webp";
+
+      this.newPostContent.content +=
+        `{{ dimmable_image(src="${ mediaFileName }", raw_path="true", alt="") }}\n`;
+    }
+
     // finalise the post content
     this.newPostContent.data = frontMatter;
 
