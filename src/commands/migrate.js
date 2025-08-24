@@ -64,8 +64,7 @@ class Migrate {
     }
 
     console.log(
-      chalk.green( "Success! " ) +
-      chalk.white( `Migrated: ${ versoPostCount } posts` )
+      `${ chalk.green( "Success! " ) } Migrated: ${ versoPostCount } posts`
     );
   }
 
