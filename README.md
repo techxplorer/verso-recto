@@ -1,5 +1,9 @@
 # Verso Recto #
 
+![GitHub License](https://img.shields.io/github/license/techxplorer/verso-recto)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/techxplorer/verso-recto/node.js.yml)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/techxplorer/verso-recto)
+
 A tool to migrate my website content written in [Markdown][md] format, from one
 [static site generator][ssg] (SSG) to another.
 
